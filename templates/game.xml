@@ -1,3 +1,21 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
-    <div id="game"></div>
+        <div class="container__game">
+        	<div class="player__info">
+        		<img class="game__avatar" src="/img/people.svg"/>
+        		<span class="game__nickmane"></span>
+        	</div>
+        	<div class="opponent__player__info">
+        		<img class="game__avatar"/>
+        		<span class="game__nickmane"></span>
+        	</div>
+        	<div class="song__name"><span>1</span>
+        	</div>
+        	<div class="song__name"><span>2</span>
+        	</div>
+        	<div class="song__name"><span>3</span>
+        	</div>
+        	<div class="song__name"><span>4</span>
+        	</div>
+            <a class="back-form button" type="back" href="#main"><i class="fa fa-caret-left fa-lg"></i><fest:space/>BACK</a>
+        </div>
 </fest:template>

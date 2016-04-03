@@ -1,3 +1,14 @@
-<fest:template xmlns:fest="http://fest.mail.ru">
-    <div id="main"></div>
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
+	<div class="content__wrapper">
+		<div class="content__wrapper__logo">
+			<span class="content__wrapper__logo__music">Music</span>
+			<span class="content__wrapper__logo__quiz">Quiz</span>
+		</div>
+		<div class="content__wrapper__game-menu">
+			<a class="content__wrapper__game-menu__button" href='#game'>New game</a>
+			<a class="content__wrapper__game-menu__button" href='#login'>Log In</a>
+			<a class="content__wrapper__game-menu__button" href='#signup'>Sign Up</a>
+			<a class="content__wrapper__game-menu__button" href='#scoreboard'>Scoreboard</a>
+		</div>
+    </div>
 </fest:template>
