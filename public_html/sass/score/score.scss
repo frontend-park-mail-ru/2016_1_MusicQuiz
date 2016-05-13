@@ -1,0 +1,35 @@
+$wrapper-box-shadow: -5px 4px 5px 0px rgba(0,0,0,0.31);
+
+.back-scoreboard {
+    margin: auto;
+    margin-top: 0.5em;
+    display: block;
+    background-color: #dcdcdc;
+    text-align: center;
+}
+
+.wrapper__scoreboard {
+    width: 40em;
+    margin: auto auto;
+    background-color: white;
+    box-shadow: $wrapper-box-shadow;
+    font-family: aleksandracregular;
+    padding-bottom: 0.5em; 
+}
+
+.wrapper__scoreboard__header {
+    display: block;
+    margin: auto auto;
+    text-align: center;
+    font-size: 3.25em;
+    padding-top: 0.3em;
+    padding-bottom: 0.1em;
+}
+
+.scoreboard__item {
+    display: block;
+    margin: auto auto;
+    text-align: center;
+    font-size: 2em;
+    padding-top: 0.3em;
+}

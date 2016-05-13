@@ -1,15 +1,19 @@
 define(function(require){
 
     var Backbone = require('backbone'),
-        MainView = require('views/main'),
+        MainMenuView = require('views/main'),
         LoginView = require('views/login'),
         SignupView = require('views/signup'),
         GameView = require('views/game'),
+        MenuView = require('views/menu'),
         ScoreboardView = require('views/scoreboard'),
-        ViewManager = require('views/viewManager')
+        ViewManager = require('views/viewManager'),
+        Session = require('models/session'),
+        Client = require('models/client')
     var $page = $('#page');
 
-    _.each([MainView,
+    _.each([MainMenuView,
+        MenuView,
         GameView,
         ScoreboardView,        
         LoginView,
@@ -23,29 +27,39 @@ define(function(require){
             'scoreboard': 'scoreboardAction',
             'login': 'loginAction',
             'signup': 'signupAction',
-            '*default': 'defaultActions'
+            'menu': 'menuAction',
+            'main': 'navigateAction',
+            '*default': 'navigateAction'
+            
         },
-
+        initialize: function () {
+            this.listenTo(Client.getSession(), 'login', function () { this.navigate('#main', {trigger: true})}.bind(this));
+        },
         defaultActions: function () {
-            //$page.html(MainView.render().el)
             this.navigate('main')
-            MainView.show()
+            MainMenuView.show()
         },
         scoreboardAction: function () {
-           // $page.html(ScoreboardView.render().el)
             ScoreboardView.show()
         },
         gameAction: function () {
-          //  $page.html(GameView.render().el)
             GameView.show()
         },
         loginAction: function () {
-          //  $page.html(LoginView.render().el)
             LoginView.show()
         },
         signupAction: function () {
-          //  $page.html(SignupView.render().el)
             SignupView.show()
+        },
+        menuAction: function () {
+            MenuView.show()
+        },
+        defaultActions: function () {
+            MainMenuView.show()
+        },
+        navigateAction: function () {
+            this.navigate('menu')
+            MainMenuView.show()
         }
     });
 

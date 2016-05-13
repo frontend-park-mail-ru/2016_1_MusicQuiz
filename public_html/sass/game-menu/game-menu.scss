@@ -1,0 +1,27 @@
+$box-shadow: -5px 4px 5px 0px rgba(0,0,0,0.31);
+
+.content__wrapper__game-menu {
+    padding-top: 10%;
+    width: 30em;
+    margin: auto auto;
+}
+
+.content__wrapper__game-menu__player__info {
+    border: 1px solid black;
+    margin-bottom: 2%;
+    background-color: white;
+    box-shadow: $box-shadow;
+    left: 0px;
+    top: 0px;
+    position: inherit;
+    width: 100%;
+    height: 2em;
+    font-size: 3.25em;
+    display: block;
+    font-family: aleksandracregular;
+    color: rgb(0, 0, 0);
+    padding-top: 1%;
+    text-align: center;
+    text-decoration: none;
+    overflow: auto;
+}

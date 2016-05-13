@@ -27,6 +27,21 @@ module.exports = function (grunt) {
             }
         },
 
+        sass: {
+            dist: {
+                options: {
+                    update: true
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'public_html/sass/',
+                    src: ['main.scss'],
+                    dest: 'public_html/css/out/',
+                    ext: '.css'
+                }]
+            }
+        },
+
         watch: {
             fest: {
                 files: 'templates/*.xml',
@@ -34,6 +49,11 @@ module.exports = function (grunt) {
                 options: {
                     atBegin: true
                 }
+            },
+
+            sass: {
+                files: 'public_html/sass/**/*.scss',
+                tasks: ['sass']
             },
 
             server: {
@@ -68,6 +88,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-fest');
     grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-requirejs');
+    grunt.loadNpmTasks('grunt-sass');
 
     // результат команды grunt
     grunt.registerTask('test', ['qunit:all']);

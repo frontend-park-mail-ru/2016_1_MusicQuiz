@@ -2,9 +2,10 @@ require.config({
     urlArgs: "_=" + (new Date()).getTime(),
     baseUrl: "js",
     paths: {
-        'underscore': "lib/underscore",
-        'backbone': "lib/backbone",
-        'jquery': "lib/jquery"
+        underscore: "lib/underscore",
+        backbone: "lib/backbone",
+        jquery: "lib/jquery",
+        wavesurfer: "lib/wavesurfer"
     },
     shim: {
         'backbone': {
@@ -13,6 +14,9 @@ require.config({
         },
         'underscore': {
             exports: '_'
+        },
+        'wavesurfer': {
+            exports: 'WaveSurfer'
         }
     }
 });

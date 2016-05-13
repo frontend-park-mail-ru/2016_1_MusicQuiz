@@ -1,21 +1,51 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
         <div class="container__game">
-        	<div class="player__info">
-        		<img class="game__avatar" src="/img/people.svg"/>
-        		<span class="game__nickmane"></span>
+            <div class="waveform__wrapper">
+                <div id="waveform">
+                </div>
+                <div id="equalizer"></div>
+            </div>
+            <!--<div class="players__info">
+            	<div class="player__info">
+            		<img class="game__avatar" src="/img/people.svg"/>
+                    <div class="game__nickmane">
+            		  <span>NICKNAME</span>
+                    </div>
+            	</div>
+            	<div class="opponent__player__info">
+            		<img class="opponent__game__avatar" src="/img/people.svg"/>
+                    <div class="opponent__game__nickmane">
+            		  <span>OPPONENT</span>
+                    </div>
+            	</div>
+            </div>-->
+
+        	<!--<div class="song_name">
+                <span>1</span>
         	</div>
-        	<div class="opponent__player__info">
-        		<img class="game__avatar"/>
-        		<span class="game__nickmane"></span>
+        	<div class="song_name">
+                <span>2</span>
         	</div>
-        	<div class="song__name"><span>1</span>
+        	<div class="song_name">
+                <span>3</span>
         	</div>
-        	<div class="song__name"><span>2</span>
+        	<div class="song_name">
+                <span>4</span>
         	</div>
-        	<div class="song__name"><span>3</span>
-        	</div>
-        	<div class="song__name"><span>4</span>
-        	</div>
-            <a class="back-form button" type="back" href="#main"><i class="fa fa-caret-left fa-lg"></i><fest:space/>BACK</a>
+            <a class="back-form button" type="back" href="#main">
+                <i class="fa fa-caret-left fa-lg"></i>
+                <fest:space/>
+                BACK
+            </a>-->
+            <div class="song__names">
+                <div class="song__button__1">1
+                </div>
+                <div class="song__button__2">2
+                </div>
+                <div class="song__button__3">3
+                </div>
+                <div class="song__button__4">4
+                </div>
+            </div>
         </div>
 </fest:template>

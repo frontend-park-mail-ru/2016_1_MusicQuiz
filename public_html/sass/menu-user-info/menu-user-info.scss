@@ -1,0 +1,30 @@
+.menu__game__avatar {
+    display: inline-block;
+
+    width: 1.5em;
+    height: 1.5em;
+    float: left;
+    margin-left: 1em;
+    margin-top: 0.2em;
+    border-radius: 1.5em;
+}
+
+.menu__username {
+    display: inline-block;
+    font-family: aleksandracregular;
+    color: rgb(0, 0, 0);
+    font-size: 0.7em;
+    float: center;
+    margin-left: -2em;
+    margin-top: 0.3em;
+}
+
+.menu__score {
+    display: block;
+    font-family: aleksandracregular;
+    color: rgb(0, 0, 0);
+    font-size: 0.7em;
+    float: center;
+    margin-left: -2em;
+    margin-top: 0.3em;
+}

@@ -1,0 +1,32 @@
+$wrapper-box-shadow: -5px 4px 65px 0px rgba(0,0,0,0.31);
+
+.content__wrapper {
+    padding-top: 5%;
+    margin: auto auto;
+    width: 40em;
+    display: block;
+}
+
+.content__wrapper__logo {
+    padding-top: 2%;
+    background-color: rgb(249, 246, 192);
+    border-width: 0.1em;
+    border-color: rgb(126, 107, 93);
+    border-style: solid;
+    border-radius: 1em;
+    box-shadow: $wrapper-box-shadow;
+    font-family: BILLIEBOB;
+    font-size: 5em;
+    text-align: center;
+    text-decoration: none;
+}
+
+.content__wrapper__logo__music {
+    color: #9F3ED5;
+    -webkit-user-select: none;
+}
+
+.content__wrapper__logo__quiz {
+    color: #9FEE00;
+    -webkit-user-select: none;
+}
