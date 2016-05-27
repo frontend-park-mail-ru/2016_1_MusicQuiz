@@ -1,3 +1,4 @@
+"use strict";
 define(function(require) {
   var Backbone = require('backbone');
   QUnit.module('models/score');

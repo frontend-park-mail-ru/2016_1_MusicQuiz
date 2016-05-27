@@ -1,144 +1,161 @@
+"use strict";
 define(function (require) {
 
-	var Backbone = require('backbone')
-	var Tmpl = require('tmpl/signup')
-	var User = require('models/user')
+	var Backbone = require('backbone'),
+		tmpl = require('tmpl/signup'),
+		User = require('models/user'),
+		app = require('app');
+
 
 	var SignupView = Backbone.View.extend({
 		events: {
-			"submit ": "submit",
+			"submit ": "trySignup"/*,
 			"click #pop-up": "popup",
-			"change input[type=file][class=upload-pic]": "photo"
+			"change input[type=file][class=upload-pic]": "photo"*/
 		},
 
-		template: Tmpl,
+		template: tmpl,
 		model: User,
+		expectAuth: false,
 
 		initialize: function() {
-			this.render()
-		},
-
-		render: function() {
-			this.$el.html(this.template)
-			return this;
-		},
-
-		submit: function(e) {
-			e.preventDefault()
-
-			fields = {
-		        'login': this.$el.find('.sign-form__login'),
+			this.template = tmpl;
+			this.render();
+			this.listenTo(app.getUser(), 'formError', this.showError);
+			this.inputs = {
+				'login': this.$el.find('.sign-form__login'),
 		        'email': this.$el.find('.sign-form__email'),
 		        'password': this.$el.find('.sign-form__password'),
 		        'submitPassword': this.$el.find('.sign-form__submit-password')
-		    }
-
-		    errorField = this.$el.find('.sign-form-error').text('')
-
-			var userData = {
-        		login: fields.login.val(),
-        		email: fields.email.val()
-      		};
-			
-			var user = new User()
-			var error = user.validate(userData)
-			
-			if (error != undefined ) {
-				errorField.text(error)
-			} 
-			else {
-				alert('YOU SIGNED UP')
 			}
-
 		},
 
-		photo: function(e) {
+		render: function() {
+			this.$el.html(this.template);
+		},
 
-			input = $('.upload-pic')[0]
-            photo = $('#photo')[0]
+		trySignup: function(e) {
+			e.preventDefault();
 
-            var reader = new FileReader()
+		    var errorField = this.$el.find('.sign-form-error').text('');
+			var uData = {
+        		'login': this.inputs.login.val(),
+        		'email': this.inputs.email.val(),
+        		'password': this.inputs.password.val()
+      		};
+      		var u = new User();
+			var error = u.validate(uData);
+
+			if (error != undefined ) {
+				errorField.text(error);
+			} 
+			else {
+				var user = app.getUser();
+				user.once('register', (function(result) {
+					this.expectAuth = true;
+				}).bind(this));
+
+				user.signup(uData);
+			}
+			return false;
+		},
+
+		showError: function(err) {
+			var errorField = this.$el.find('.sign-form-error').text(err);
+		},
+
+		onAuth: function(result) {
+			var router = require('router');
+		    if(result.isAuth && this.expectAuth) {
+		    	this.expectAuth = false;
+		        router.go('');
+      }
+		},
+
+		/*photo: function(e) {
+
+			input = $('.upload-pic')[0];
+            photo = $('#photo')[0];
+
+            var reader = new FileReader();
 
 	        reader.onload = function (e) {
-	            $('#photo').attr('src', e.target.result)
+	            $('#photo').attr('src', e.target.result);
 	        }
 
-	        reader.readAsDataURL(input.files[0])
+	        reader.readAsDataURL(input.files[0]);
 		},
 
 		popup: function(e) {
-			e.preventDefault()
+			e.preventDefault();
 
-			this.$('.hide-layout').css("display", "block")
-			this.$('.pop-up__camera').css("display", "block")
-			this.$('.pop-up__camera__record').css("display", "block")
-			this.$('.pop-up__camera__buttons').css("display", "block")
-			this.$('.pop-up__camera__btn').css("display", "inline-block")
+			this.$('.hide-layout').show();
+			this.$('.pop-up__camera').show();
+			this.$('.pop-up__camera__record').show();
+			this.$('.pop-up__camera__buttons').show();
+			this.$('.pop-up__camera__btn').show();
 
-			var video = document.getElementById('video'),
-			canvas = document.getElementById('canvas'),
-			context = canvas.getContext('2d'),
-			photo = document.getElementById('photo')
-			preview = document.getElementById('preview'),
-			vendorUrl = window.URL || window.webkitURL
-			console.log(video)
-			console.log(this.$('#video'))
-			var Mystream
-			canvas.width = 480
-			canvas.height = 480
+			var video = this.$('#video')[0],
+				canvas = this.$('canvas')[0],
+				photo = this.$('#photo')[0],
+				preview = this.$('#preview')[0],
+				context = canvas.getContext('2d'),
+				vendorUrl = window.URL || window.webkitURL;
+			var Mystream;
+			canvas.width = 480;
+			canvas.height = 480;
 			navigator.getMedia = (  navigator.getUserMedia ||
 									navigator.webkitGetUserMedia ||
 									navigator.mozGetUserMedia || 
-									navigator.msGetUserMedia)
+									navigator.msGetUserMedia);
 			navigator.getMedia({
 			   video: true,
 			   audio: false
 			}, function(stream) {
-				Mystream = stream
-			   	video.src = vendorUrl.createObjectURL(Mystream)
-			   	video.play()
+				Mystream = stream;
+			   	video.src = vendorUrl.createObjectURL(Mystream);
+			   	video.play();
 			  	}, function(error) {
-			   		alert('Ошибка! Что-то пошло не так, попробуйте позже.')
+			   		alert('Ошибка! Что-то пошло не так, попробуйте позже.');
 			  		});
-			document.getElementById('shot').addEventListener('click', function() {
-			   context.drawImage(video, -80, 0)
-			   photo.setAttribute('src', canvas.toDataURL('image/png'))
-
-			var track = Mystream.getTracks()[0]
-			track.stop()
-			$('.hide-layout').css("display", "none")
-			$('.pop-up__camera').css("display", "none")
-			$('.pop-up__camera__record').css("display", "none")
-			$('.pop-up__camera__buttons').css("display", "none")
-			$('.pop-up__camera__btn').css("display", "none")
-
-
+			$('#shot')[0].addEventListener('click', function() {
+				context.drawImage(video, -80, 0);
+				photo.setAttribute('src', canvas.toDataURL('image/png'));
+				var track = Mystream.getTracks()[0];
+				track.stop();
+				$('.hide-layout').hide();
+				$('.pop-up__camera').hide();
+				$('.pop-up__camera__record').hide();
+				$('.pop-up__camera__buttons').hide();
+				$('.pop-up__camera__btn').hide();
 			  })
 
-			document.getElementById('cancel').addEventListener('click', function(e) {
-				e.preventDefault()
+			$('#cancel')[0].addEventListener('click', function(e) {
+				e.preventDefault();
 				if(Mystream) {
-					var track = Mystream.getTracks()[0]
-					track.stop()
+					var track = Mystream.getTracks()[0];
+					track.stop();
 				}
-				$('.hide-layout').css("display", "none")
-				$('.pop-up__camera').css("display", "none")
-				$('.pop-up__camera__record').css("display", "none")
-				$('.pop-up__camera__buttons').css("display", "none")
-				$('.pop-up__camera__btn').css("display", "none")
+				$('.hide-layout').hide();
+				$('.pop-up__camera').hide();
+				$('.pop-up__camera__record').hide();
+				$('.pop-up__camera__buttons').hide();
+				$('.pop-up__camera__btn').hide();
 			})
 			
-		},
+		},*/
 
 		show: function () {
+
             this.trigger('show');
+            this.delegateEvents();
             this.$el.show();
         },
 
 		hide: function() {
-			this.$el.hide()
+			this.$el.hide();
 		}
 	})
 
-	return new SignupView()
+	return SignupView;
 });

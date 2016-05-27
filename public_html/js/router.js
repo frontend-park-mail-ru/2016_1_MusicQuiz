@@ -1,19 +1,29 @@
+"use strict";
 define(function(require){
 
     var Backbone = require('backbone'),
+        _ = require('underscore'),
         MainView = require('views/main'),
         LoginView = require('views/login'),
         SignupView = require('views/signup'),
         GameView = require('views/game'),
+        MenuView = require('views/menu'),
         ScoreboardView = require('views/scoreboard'),
-        ViewManager = require('views/viewManager')
+        ViewManager = require('views/viewManager'),
+        app = require('app');
     var $page = $('#page');
 
-    _.each([MainView,
-        GameView,
-        ScoreboardView,        
-        LoginView,
-        SignupView], function(view) {
+    var mainView = new MainView(),
+        loginView = new LoginView(),
+        signupView = new SignupView(),
+        gameView = new GameView(),
+        scoreboardView = new ScoreboardView(); 
+
+    _.each([mainView,
+        gameView,
+        scoreboardView,        
+        loginView,
+        signupView], function(view) {
         ViewManager.addView(view);
     });
 
@@ -23,29 +33,35 @@ define(function(require){
             'scoreboard': 'scoreboardAction',
             'login': 'loginAction',
             'signup': 'signupAction',
-            '*default': 'defaultActions'
+            'logout': 'loginAction',
+            '*default': 'defaultAction'
+            
         },
 
-        defaultActions: function () {
-            //$page.html(MainView.render().el)
-            this.navigate('main')
-            MainView.show()
+        go: function(where) {
+            return this.navigate(where, { trigger: true });
+        },
+        initialize: function () {
+           // this.listenTo(Client.getSession(), 'login', function () { this.navigate('#main', {trigger: true})}.bind(this));
         },
         scoreboardAction: function () {
-           // $page.html(ScoreboardView.render().el)
-            ScoreboardView.show()
+            scoreboardView.show();
         },
         gameAction: function () {
-          //  $page.html(GameView.render().el)
-            GameView.show()
+            gameView.show();
         },
         loginAction: function () {
-          //  $page.html(LoginView.render().el)
-            LoginView.show()
+            loginView.show();
         },
         signupAction: function () {
-          //  $page.html(SignupView.render().el)
-            SignupView.show()
+            signupView.show();
+        },
+        defaultAction: function () {
+            mainView.show();
+        },
+        logoutAction: function() {
+            app.getSession().logout();
+            this.go('main');
         }
     });
 

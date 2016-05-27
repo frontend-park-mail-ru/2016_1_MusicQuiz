@@ -1,16 +1,16 @@
+"use strict";
 define(function(require){
 
-    var Backbone = require('backbone')
+    var Backbone = require('backbone');
 
-    var ScoreboardModel = Backbone.Model.extend({
+    var Scoreboard = Backbone.Model.extend({
 
     	default: {
     		'name': '',
     		'score': 0
-    	},
+    	}
 
-    	initialize: function() {}
     });
 
-    return ScoreboardModel;
+    return Scoreboard;
 });
